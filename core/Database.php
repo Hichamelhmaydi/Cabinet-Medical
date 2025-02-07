@@ -5,22 +5,19 @@ class Database {
     private $dbname = "Cabinet_medical";
     private $user = "postgres";
     private $password = "abc";
-    private $pdo;
     
-    public function __construct() {
+    public function connect() {
         try {
-            $dsn = "pgsql:host=$this->host;port=$this->port;dbname=$this->dbname;user=$this->user;password=$this->password";
-            $this->pdo = new PDO($dsn);
+            $dsn = "pgsql:host={$this->host};port={$this->port};dbname={$this->dbname}";
             
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->pdo->exec("SET NAMES 'utf8'"); 
+            $pdo = new PDO($dsn, $this->user, $this->password);
+            
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            return $pdo;
             
         } catch (PDOException $e) {
-            die("connexion échoui : " . $e->getMessage());
+            die("conexion avec la base de donnée a était éxhi: " . $e->getMessage());
         }
-    }
-    
-    public function getConnection() {
-        return $this->pdo;
     }
 }

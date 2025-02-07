@@ -7,8 +7,7 @@ class AuthController {
     private $userModel;
     
     public function __construct() {
-        $db = new Database();
-        $this->userModel = new User($db->getConnection());
+        $this->userModel = new User();
     }
     
     public function register() {
